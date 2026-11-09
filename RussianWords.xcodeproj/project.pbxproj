@@ -8,12 +8,40 @@
 /* Begin PBXBuildFile section */
 		A10000000000000000000001 /* RussianWordsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000001 /* RussianWordsApp.swift */; };
 		A10000000000000000000002 /* MainAppView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* MainAppView.swift */; };
+		3CDD80BBCE7F9BBAD261C628 = {isa = PBXBuildFile; fileRef = EC58B990906A1B0965CDFE7D; };
+		4F92BCA3FC6D4C0EFB9FC4E9 = {isa = PBXBuildFile; fileRef = D61DE781F06AA5E239E3B48A; };
+		43A209AA3BBD55D82DCC7C0D = {isa = PBXBuildFile; fileRef = 3003529C6C8601D3B5A088B8; };
+		5FB2B5B9921ECDA2AEEE0916 = {isa = PBXBuildFile; fileRef = C0AE2D145948DA0C93761863; };
+		3E3EDCE1F297A34EDB9FB5AC = {isa = PBXBuildFile; fileRef = 3BCAA78E5CC7FEAC3F94D63A; };
+		8A396E038F637431616B8DA4 = {isa = PBXBuildFile; fileRef = 948FDC508224CA2594B808AB; };
+		98500859E8B77E7E88ADBC3E = {isa = PBXBuildFile; fileRef = 2FB30527C0DF1AD27C9ACD86; };
+		F4D36E0624881A8787B31891 = {isa = PBXBuildFile; fileRef = 7CD46CA874782D83E392E28C; };
+		18CCE1495C4AAD55C158CF86 = {isa = PBXBuildFile; fileRef = 927B13DFC7E698CC8D565C2B; };
+		0186D30BB56BF883262664C3 = {isa = PBXBuildFile; fileRef = F8C16A378349758F71171588; };
+		358095E5DEFFF789212D635D = {isa = PBXBuildFile; fileRef = 092E7469369D8A1AC4C476C9; };
+		623BF898AEC207FB4A9E7693 = {isa = PBXBuildFile; fileRef = 423959163CF55ADAC7246FAF; };
+		71CD733B67497CBC9DF078C2 = {isa = PBXBuildFile; fileRef = 435BD2693126FC56AF892225; };
+		4B743931EA0348A3CDA3305B = {isa = PBXBuildFile; fileRef = FB2C15E4BAE7B0C720D113B9; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		A20000000000000000000001 /* RussianWordsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RussianWordsApp.swift; sourceTree = "<group>"; };
 		A20000000000000000000002 /* MainAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppView.swift; sourceTree = "<group>"; };
 		A20000000000000000000003 /* RussianWords.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RussianWords.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC58B990906A1B0965CDFE7D = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App/AppModel.swift"; sourceTree = "<group>"; };
+		D61DE781F06AA5E239E3B48A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/LearningViews.swift"; sourceTree = "<group>"; };
+		3003529C6C8601D3B5A088B8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/PersonalWordsView.swift"; sourceTree = "<group>"; };
+		C0AE2D145948DA0C93761863 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/TranslationViews.swift"; sourceTree = "<group>"; };
+		3BCAA78E5CC7FEAC3F94D63A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/DictionaryEntry.swift"; sourceTree = "<group>"; };
+		948FDC508224CA2594B808AB = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/LearningModels.swift"; sourceTree = "<group>"; };
+		2FB30527C0DF1AD27C9ACD86 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/DictionaryRepository.swift"; sourceTree = "<group>"; };
+		7CD46CA874782D83E392E28C = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/LearningStore.swift"; sourceTree = "<group>"; };
+		927B13DFC7E698CC8D565C2B = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/SpeechServices.swift"; sourceTree = "<group>"; };
+		F8C16A378349758F71171588 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/TranslationHistoryStore.swift"; sourceTree = "<group>"; };
+		092E7469369D8A1AC4C476C9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/TranslationService.swift"; sourceTree = "<group>"; };
+		423959163CF55ADAC7246FAF = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI/AppTheme.swift"; sourceTree = "<group>"; };
+		435BD2693126FC56AF892225 = {isa = PBXFileReference; lastKnownFileType = file; path = "Resources/dictionary.sqlite"; sourceTree = "<group>"; };
+		FB2C15E4BAE7B0C720D113B9 = {isa = PBXFileReference; lastKnownFileType = text; path = "Resources/OpenRussian-LICENSE.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +59,20 @@
 			children = (
 				A20000000000000000000001 /* RussianWordsApp.swift */,
 				A20000000000000000000002 /* MainAppView.swift */,
+				EC58B990906A1B0965CDFE7D,
+				D61DE781F06AA5E239E3B48A,
+				3003529C6C8601D3B5A088B8,
+				C0AE2D145948DA0C93761863,
+				3BCAA78E5CC7FEAC3F94D63A,
+				948FDC508224CA2594B808AB,
+				2FB30527C0DF1AD27C9ACD86,
+				7CD46CA874782D83E392E28C,
+				927B13DFC7E698CC8D565C2B,
+				F8C16A378349758F71171588,
+				092E7469369D8A1AC4C476C9,
+				423959163CF55ADAC7246FAF,
+				435BD2693126FC56AF892225,
+				FB2C15E4BAE7B0C720D113B9,
 				A40000000000000000000002 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,7 +131,10 @@
 		A60000000000000000000001 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
-			files = ();
+			files = (
+				71CD733B67497CBC9DF078C2,
+				4B743931EA0348A3CDA3305B,
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
@@ -101,6 +146,18 @@
 			files = (
 				A10000000000000000000001 /* RussianWordsApp.swift in Sources */,
 				A10000000000000000000002 /* MainAppView.swift in Sources */,
+				3CDD80BBCE7F9BBAD261C628,
+				4F92BCA3FC6D4C0EFB9FC4E9,
+				43A209AA3BBD55D82DCC7C0D,
+				5FB2B5B9921ECDA2AEEE0916,
+				3E3EDCE1F297A34EDB9FB5AC,
+				8A396E038F637431616B8DA4,
+				98500859E8B77E7E88ADBC3E,
+				F4D36E0624881A8787B31891,
+				18CCE1495C4AAD55C158CF86,
+				0186D30BB56BF883262664C3,
+				358095E5DEFFF789212D635D,
+				623BF898AEC207FB4A9E7693,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,14 +199,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "俄语单词本";
+				INFOPLIST_KEY_CFBundleDisplayName = "RussianWords";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "录制你主动发起的中俄语音对话。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "将中文或俄语语音识别成文字，音频可能由 Apple 在线处理。";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RussianWords;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -166,14 +225,16 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "俄语单词本";
+				INFOPLIST_KEY_CFBundleDisplayName = "RussianWords";
+				INFOPLIST_KEY_NSMicrophoneUsageDescription = "录制你主动发起的中俄语音对话。";
+				INFOPLIST_KEY_NSSpeechRecognitionUsageDescription = "将中文或俄语语音识别成文字，音频可能由 Apple 在线处理。";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RussianWords;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

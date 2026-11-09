@@ -1,0 +1,32 @@
+{
+  "source": "OpenRussian",
+  "repository": "https://github.com/Badestrand/russian-dictionary",
+  "commit": "50e210c4803237779cb562bc1abcea529066031c",
+  "license": "CC-BY-SA-4.0",
+  "files": {
+    "nouns.csv": {
+      "url": "https://raw.githubusercontent.com/Badestrand/russian-dictionary/50e210c4803237779cb562bc1abcea529066031c/nouns.csv",
+      "sha256": "c388f9e6dde51932832be8d7e9afdbe9f0acee72fcf70677f0fe25ea61293c84",
+      "gzip_sha256": "a00e5a7707486624b5db48af45e7b39a4f78d5af59e5271ce9c1144a7595e7e6",
+      "raw_bytes": 8378501
+    },
+    "verbs.csv": {
+      "url": "https://raw.githubusercontent.com/Badestrand/russian-dictionary/50e210c4803237779cb562bc1abcea529066031c/verbs.csv",
+      "sha256": "8659de6799b949fb35f080b08088fb7d347ed300490954ebb380a31642646e1d",
+      "gzip_sha256": "71018a1cb08e2a2320eb62f2d92a9ce211026967f604231932145297900446c0",
+      "raw_bytes": 5650332
+    },
+    "adjectives.csv": {
+      "url": "https://raw.githubusercontent.com/Badestrand/russian-dictionary/50e210c4803237779cb562bc1abcea529066031c/adjectives.csv",
+      "sha256": "89ab5d10dcd2f21f6b485de704aef372f32251468e3aa96f18b21e259f26b80a",
+      "gzip_sha256": "be4f22e0864c07e59ac506bc85d4dd8e3fbfa8c932954694d41d23bfce9077eb",
+      "raw_bytes": 8343334
+    },
+    "others.csv": {
+      "url": "https://raw.githubusercontent.com/Badestrand/russian-dictionary/50e210c4803237779cb562bc1abcea529066031c/others.csv",
+      "sha256": "9f22a16b17fc9a564298112168b667fced11aafb254ccebf5b7544fc37cdaa92",
+      "gzip_sha256": "5a1154e15c31e1d878bb11d9fcf6ce28ef8a895359fa99aa452f80416487c995",
+      "raw_bytes": 344444
+    }
+  }
+}

@@ -1,0 +1,23 @@
+name: iOS build and core tests
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: macos-14
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Core, SQLite and HTTP contract tests
+        run: swift test --jobs 2
+      - name: Dictionary quality and import tests
+        run: |
+          python3 -m unittest discover -s Tests/Python -v
+          python3 Scripts/validate_dictionary.py
+      - name: Build iOS simulator app
+        run: >-
+          xcodebuild -project RussianWords.xcodeproj -scheme RussianWords
+          -configuration Debug -sdk iphonesimulator
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath /tmp/RussianWords-DerivedData
+          CODE_SIGNING_ALLOWED=NO build
