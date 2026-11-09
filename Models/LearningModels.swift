@@ -59,6 +59,19 @@ public enum ReviewRating: String, Codable, CaseIterable {
     }
 }
 
+public enum MasteryState: String, Codable {
+    case new, learning, mastered, relearning
+
+    public var title: String {
+        switch self {
+        case .new: return "新词"
+        case .learning: return "学习中"
+        case .mastered: return "已掌握"
+        case .relearning: return "重新学习"
+        }
+    }
+}
+
 public struct ReviewRecord: Codable, Equatable {
     public let entryID: String
     public var repetitions: Int
@@ -68,6 +81,17 @@ public struct ReviewRecord: Codable, Equatable {
     public var lastReviewedAt: Date?
     public var reviewCount: Int
     public var lapseCount: Int
+
+    /// SM-2 repetitions count consecutive successful ratings since the last lapse.
+    /// Ease affects intervalDays through the existing scheduler. Due dates alone do
+    /// not revoke mastery: an overdue review is not evidence of forgetting.
+    public var mastery: MasteryState {
+        guard reviewCount > 0 else { return .new }
+        if reviewCount >= 3, repetitions >= 3, intervalDays >= 14, lastReviewedAt != nil {
+            return .mastered
+        }
+        return lapseCount > 0 ? .relearning : .learning
+    }
 
     public init(entryID: String, dueDate: Date) {
         self.entryID = entryID
@@ -151,6 +175,15 @@ public struct LearningProgress: Codable, Equatable {
     public var legacyMigrationCompleted: Bool = false
 
     public init() {}
+
+    /// Keep the historical flag for backwards compatibility, but never let it
+    /// override an observed lapse. All current consumers use this single adapter.
+    public func mastery(for entryID: String) -> MasteryState {
+        let record = records[entryID]
+        let legacyMastered = legacyWords.contains { $0.entryID == entryID && $0.isMastered }
+        if legacyMastered && (record?.lapseCount ?? 0) == 0 { return .mastered }
+        return record?.mastery ?? .new
+    }
 }
 
 public enum LearningStorageError: LocalizedError {

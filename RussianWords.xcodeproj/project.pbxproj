@@ -22,6 +22,16 @@
 		623BF898AEC207FB4A9E7693 = {isa = PBXBuildFile; fileRef = 423959163CF55ADAC7246FAF; };
 		71CD733B67497CBC9DF078C2 = {isa = PBXBuildFile; fileRef = 435BD2693126FC56AF892225; };
 		4B743931EA0348A3CDA3305B = {isa = PBXBuildFile; fileRef = FB2C15E4BAE7B0C720D113B9; };
+		DC609B79CC6C0C00E9EBC59A = {isa = PBXBuildFile; fileRef = F372C401728F40D875EE300A; };
+		1341C5BDFD9A3BC4C391C5EB = {isa = PBXBuildFile; fileRef = 4FDF94618DC57ED1BB2746EF; };
+		ABD73FAB77F6F8D038D95C37 = {isa = PBXBuildFile; fileRef = 5D6EF4E9D9D8A70D78700F0A; };
+		0B95C3920BD0E76F43540D19 = {isa = PBXBuildFile; fileRef = 76AACE7C2FAB2E05F2045715; };
+		7FAAA7833E31A8FF926442D9 = {isa = PBXBuildFile; fileRef = D399FA34F04C3B6D4310AE94; };
+		959A5B526B3686DB3DE75A05 = {isa = PBXBuildFile; fileRef = 5AE51056375FB39AC4F6ACA0; };
+		DF5F811F908CEB35B5BB2CE0 = {isa = PBXBuildFile; fileRef = 6030EAB2FBEF0D0A63205480; };
+		72C3C6CC23F40A3BB3ADD19B = {isa = PBXBuildFile; fileRef = 67AA32C48F2E020BE7F8B321; };
+		20354B7A270F657B54E3A510 = {isa = PBXBuildFile; fileRef = 0121C6F3165F5B02E88CF561; };
+		C42AA0C437DF19E873547411 = {isa = PBXBuildFile; fileRef = 4A78D4D3BBC68D2EDA46373F; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +52,16 @@
 		423959163CF55ADAC7246FAF = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UI/AppTheme.swift"; sourceTree = "<group>"; };
 		435BD2693126FC56AF892225 = {isa = PBXFileReference; lastKnownFileType = file; path = "Resources/dictionary.sqlite"; sourceTree = "<group>"; };
 		FB2C15E4BAE7B0C720D113B9 = {isa = PBXFileReference; lastKnownFileType = text; path = "Resources/OpenRussian-LICENSE.txt"; sourceTree = "<group>"; };
+		F372C401728F40D875EE300A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/DailyCourse.swift"; sourceTree = "<group>"; };
+		4FDF94618DC57ED1BB2746EF = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/CourseLoader.swift"; sourceTree = "<group>"; };
+		5D6EF4E9D9D8A70D78700F0A = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/CourseProgressStore.swift"; sourceTree = "<group>"; };
+		76AACE7C2FAB2E05F2045715 = {isa = PBXFileReference; lastKnownFileType = text.json; path = "Resources/day1.sample.json"; sourceTree = "<group>"; };
+		D399FA34F04C3B6D4310AE94 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/ExerciseModels.swift"; sourceTree = "<group>"; };
+		5AE51056375FB39AC4F6ACA0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/ExerciseGrader.swift"; sourceTree = "<group>"; };
+		6030EAB2FBEF0D0A63205480 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Services/ExerciseStore.swift"; sourceTree = "<group>"; };
+		67AA32C48F2E020BE7F8B321 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Models/ExampleExercises.swift"; sourceTree = "<group>"; };
+		0121C6F3165F5B02E88CF561 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/DailyCourseView.swift"; sourceTree = "<group>"; };
+		4A78D4D3BBC68D2EDA46373F = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Features/ExerciseView.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +93,16 @@
 				423959163CF55ADAC7246FAF,
 				435BD2693126FC56AF892225,
 				FB2C15E4BAE7B0C720D113B9,
+				F372C401728F40D875EE300A,
+				4FDF94618DC57ED1BB2746EF,
+				5D6EF4E9D9D8A70D78700F0A,
+				76AACE7C2FAB2E05F2045715,
+				D399FA34F04C3B6D4310AE94,
+				5AE51056375FB39AC4F6ACA0,
+				6030EAB2FBEF0D0A63205480,
+				67AA32C48F2E020BE7F8B321,
+				0121C6F3165F5B02E88CF561,
+				4A78D4D3BBC68D2EDA46373F,
 				A40000000000000000000002 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -132,6 +162,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B95C3920BD0E76F43540D19,
 				71CD733B67497CBC9DF078C2,
 				4B743931EA0348A3CDA3305B,
 			);
@@ -144,6 +175,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72C3C6CC23F40A3BB3ADD19B,
+				20354B7A270F657B54E3A510,
+				C42AA0C437DF19E873547411,
+				7FAAA7833E31A8FF926442D9,
+				959A5B526B3686DB3DE75A05,
+				DF5F811F908CEB35B5BB2CE0,
+				DC609B79CC6C0C00E9EBC59A,
+				1341C5BDFD9A3BC4C391C5EB,
+				ABD73FAB77F6F8D038D95C37,
 				A10000000000000000000001 /* RussianWordsApp.swift in Sources */,
 				A10000000000000000000002 /* MainAppView.swift in Sources */,
 				3CDD80BBCE7F9BBAD261C628,

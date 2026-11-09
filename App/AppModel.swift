@@ -81,6 +81,18 @@ final class AppModel: ObservableObject {
     func isFavorite(_ id: String) -> Bool { learning?.state.favorites.contains(id) ?? false }
     func isEnrolled(_ id: String) -> Bool { learning?.state.records[id] != nil }
 
+    func mastery(for id: String) -> MasteryState { learning?.state.mastery(for: id) ?? .new }
+
+    func makeCourseProgressStore() throws -> CourseProgressStore {
+        guard let learning else { throw LearningStorageError.invalidData("学习记录尚未成功打开") }
+        return try CourseProgressStore(learningStore: learning)
+    }
+
+    func makeExerciseStore() throws -> ExerciseStore {
+        guard let learning else { throw LearningStorageError.invalidData("学习记录尚未成功打开") }
+        return try ExerciseStore(learningStore: learning)
+    }
+
     func toggleFavorite(_ entry: DictionaryEntry) {
         modify { try $0.setFavorite(entryID: entry.id, isFavorite: !self.isFavorite(entry.id)) }
         loadFavorites()

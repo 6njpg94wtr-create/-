@@ -32,7 +32,9 @@ struct PersonalWordsView: View {
                 }
             }
         }
+        .rwFormStyle()
         .navigationTitle("我的单词")
+        .navigationBarTitleDisplayMode(.inline)
         .searchable(text: $search, prompt: "俄语或中文")
         .toolbar { Button { showAdd = true } label: { Image(systemName: "plus") } }
         .sheet(isPresented: $showAdd) { PersonalWordEditor() }
@@ -55,7 +57,9 @@ private struct PersonalWordEditor: View {
                     TextField("发音笔记（选填）", text: $phonetic)
                 }
             }
+            .rwFormStyle()
             .navigationTitle("添加我的单词")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) { Button("取消") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
@@ -96,7 +100,9 @@ struct ProgressBackupView: View {
                 Button("从备份恢复") { importing = true }
             }
         }
+        .rwFormStyle()
         .navigationTitle("备份与恢复")
+        .navigationBarTitleDisplayMode(.inline)
         .fileExporter(isPresented: $exporting, document: document, contentType: .json, defaultFilename: "RussianWords-progress") { result in
             if case .failure(let error) = result { model.errorMessage = error.localizedDescription }
         }

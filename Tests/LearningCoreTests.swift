@@ -42,6 +42,66 @@ final class LearningCoreTests: XCTestCase {
         XCTAssertFalse(LearningTier.core.includes(.basic))
     }
 
+    func testMasteryRequiresRepeatedSuccessAndLongEnoughInterval() throws {
+        let store = try repository()
+        XCTAssertEqual(store.state.mastery(for: "word"), .new)
+        try store.enroll(entryID: "word", now: instant)
+        XCTAssertEqual(store.state.mastery(for: "word"), .new)
+        for i in 1...3 {
+            let date = store.state.records["word"]!.dueDate
+            try store.review(entryID: "word", rating: .good, now: date)
+            XCTAssertEqual(store.state.mastery(for: "word"), i == 3 ? .mastered : .learning)
+        }
+        let restarted = try repository()
+        XCTAssertEqual(restarted.state.mastery(for: "word"), .mastered)
+        var insufficient = restarted.state.records["word"]!
+        insufficient.intervalDays = 6
+        XCTAssertEqual(insufficient.mastery, .learning)
+        insufficient.intervalDays = 15
+        insufficient.repetitions = 1
+        XCTAssertEqual(insufficient.mastery, .learning)
+    }
+
+    func testMasteryLapseAndRecoveryPersistWithoutChangingFavorites() throws {
+        let store = try repository()
+        try store.setFavorite(entryID: "word", isFavorite: true)
+        for _ in 0..<3 {
+            try store.review(entryID: "word", rating: .good, now: store.state.records["word"]?.dueDate ?? instant)
+        }
+        XCTAssertEqual(store.state.mastery(for: "word"), .mastered)
+        try store.review(entryID: "word", rating: .again, now: store.state.records["word"]!.dueDate)
+        XCTAssertEqual(store.state.mastery(for: "word"), .relearning)
+        let restarted = try repository()
+        XCTAssertEqual(restarted.state.mastery(for: "word"), .relearning)
+        for _ in 0..<4 {
+            try restarted.review(entryID: "word", rating: .good, now: restarted.state.records["word"]!.dueDate)
+        }
+        XCTAssertEqual(restarted.state.mastery(for: "word"), .mastered)
+        XCTAssertEqual(restarted.state.records["word"]?.lapseCount, 1)
+        XCTAssertTrue(restarted.state.favorites.contains("word"))
+        XCTAssertEqual(try repository().state.mastery(for: "word"), .mastered)
+    }
+
+    func testLegacyMasteryIsPreservedUntilFirstLapse() throws {
+        let word = LegacyLearningWord(russian: "слово", phonetic: "", chinese: "词", category: "笔记", isMastered: true)
+        let original = try JSONEncoder().encode([word])
+        defaults.set(original, forKey: LearningStateRepository.legacyKey)
+        let store = try repository()
+        XCTAssertEqual(store.state.mastery(for: word.entryID), .mastered)
+        try store.review(entryID: word.entryID, rating: .good, now: instant)
+        XCTAssertEqual(store.state.mastery(for: word.entryID), .mastered)
+        try store.review(entryID: word.entryID, rating: .again, now: instant.addingTimeInterval(60))
+        XCTAssertEqual(store.state.mastery(for: word.entryID), .relearning)
+        let reopened = try repository()
+        XCTAssertEqual(reopened.state.mastery(for: word.entryID), .relearning)
+        XCTAssertEqual(reopened.state.records[word.entryID]?.reviewCount, 2)
+        XCTAssertTrue(reopened.state.legacyWords[0].isMastered)
+        XCTAssertEqual(defaults.data(forKey: LearningStateRepository.legacyKey), original)
+        var legacyWithoutRecord = LearningProgress()
+        legacyWithoutRecord.legacyWords = [word]
+        XCTAssertEqual(legacyWithoutRecord.mastery(for: word.entryID), .mastered)
+    }
+
     func testOnlyReviewedChineseLearningEntriesAreAutomaticallySelected() throws {
         let store = try repository()
         let items = [candidate("query", tier: .reference), candidate("unreviewed", reviewed: false),

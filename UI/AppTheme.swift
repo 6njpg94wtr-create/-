@@ -66,3 +66,28 @@ struct RWSectionHeading: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
+
+private struct RWFormStyle: ViewModifier {
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 16.0, *) {
+            content.scrollContentBackground(.hidden)
+                .background(RWTheme.background.ignoresSafeArea())
+                .tint(RWTheme.accent)
+        } else {
+            // iOS 15 keeps its native adaptive Form/List background.
+            content.tint(RWTheme.accent)
+        }
+    }
+}
+
+extension View {
+    func rwFormStyle() -> some View { modifier(RWFormStyle()) }
+
+    func rwTextInput() -> some View {
+        self.font(.body).padding(8)
+            .background(RWTheme.background)
+            .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
+            .overlay(RoundedRectangle(cornerRadius: 12).stroke(RWTheme.accent.opacity(0.15), lineWidth: 1))
+    }
+}

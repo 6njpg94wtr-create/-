@@ -39,7 +39,7 @@ struct HomeView: View {
             }
         }
         .navigationViewStyle(.stack)
-        .sheet(isPresented: $showingQuickTranslation) { TranslationView() }
+        .sheet(isPresented: $showingQuickTranslation) { TranslationView(isPresentedModally: true) }
     }
 
     private var hero: some View {
@@ -131,6 +131,8 @@ struct LearningHubView: View {
                     RWSectionHeading(title: "建立自己的俄语基础", subtitle: "先掌握常用词，再把它们用进真实表达")
                     PriorityCards()
                     RWSectionHeading(title: "我的学习工具", subtitle: "查询、收藏与复习记录保存在本机")
+                    tool("今日课程", subtitle: "查看 Day 1 示例课程与完成记录", icon: "calendar", destination: DailyCourseView())
+                    tool("开始练习", subtitle: "两道示例题 · 选择与输入练习", icon: "checkmark.square", destination: ExerciseView())
                     tool("词典查询", subtitle: "原形、变化词形与重音无关搜索", icon: "magnifyingglass", destination: LibraryView(scope: .all))
                     tool("我的收藏", subtitle: "\(model.favorites.count) 个关注的词条", icon: "star.fill", destination: LibraryView(scope: .favorites))
                     tool("我的单词", subtitle: "保留旧版单词，也可以添加自己的中俄词汇", icon: "square.and.pencil", destination: PersonalWordsView())
@@ -272,6 +274,7 @@ struct EntryDetailView: View {
                         if !entry.partOfSpeech.isEmpty {
                             Text(entry.partOfSpeech).font(.subheadline).foregroundColor(.secondary)
                         }
+                        Text(model.mastery(for: entry.id).title).font(.caption).foregroundColor(.secondary)
                         HStack(spacing: 18) {
                             Button { model.speak(entry.russian) } label: {
                                 Label("听发音", systemImage: "speaker.wave.2.fill")
@@ -343,6 +346,7 @@ struct ReviewView: View {
                         Spacer()
                         Label("间隔复习", systemImage: "clock.arrow.circlepath").font(.caption).foregroundColor(.secondary)
                     }
+                    Text(model.mastery(for: entry.id).title).font(.caption).foregroundColor(.secondary)
                     RWCard {
                         VStack(spacing: 24) {
                             Text(entry.displayWord(showStress: model.showStress))

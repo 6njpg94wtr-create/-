@@ -6,11 +6,12 @@ import CSQLite
 #endif
 
 enum DictionaryError: LocalizedError {
-    case missing, invalid(String)
+    case missing, invalid(String), favoritesRequireUserState
     var errorDescription: String? {
         switch self {
         case .missing: return "未找到随应用安装的词典，请检查词典资源是否加入工程。"
         case .invalid(let detail): return "词典读取失败：\(detail)"
+        case .favoritesRequireUserState: return "收藏查询需要用户收藏记录，请通过 AppModel 的收藏入口查询。"
         }
     }
 }
@@ -43,6 +44,9 @@ actor DictionaryRepository {
     }
 
     func search(_ text: String, scope: LibraryScope, limit: Int = 100) throws -> [DictionaryEntry] {
+        // Favorites belong to the user progress store, not the read-only dictionary.
+        // AppModel resolves saved IDs; never silently treat this scope as all entries.
+        guard scope != .favorites else { throw DictionaryError.favoritesRequireUserState }
         let key = RussianSearch.normalize(text)
         var scopeSQL = "1=1"
         if scope == .core { scopeSQL = "tier=1 AND review_status='verified' AND chinese!=''" }

@@ -12,8 +12,8 @@ let package = Package(
             dependencies: ["CSQLite"],
             path: ".",
             exclude: ["CSQLite", "Data", "Resources", "Tests", "Scripts", "docs", "Features", "UI", "RussianWords.xcodeproj", "MainAppView.swift", "RussianWordsApp.swift", "README.md", "Services/SpeechServices.swift", "Services/TranslationHistoryStore.swift"],
-            sources: ["Models/LearningModels.swift", "Models/DictionaryEntry.swift", "Services/LearningStore.swift", "Services/DictionaryRepository.swift", "Services/TranslationService.swift"]
+            sources: ["Models/ExampleExercises.swift", "Models/ExerciseModels.swift", "Services/ExerciseGrader.swift", "Services/ExerciseStore.swift", "Models/LearningModels.swift", "Models/DailyCourse.swift", "Services/CourseLoader.swift", "Services/CourseProgressStore.swift", "Models/DictionaryEntry.swift", "Services/LearningStore.swift", "Services/DictionaryRepository.swift", "Services/TranslationService.swift"]
         ),
-        .testTarget(name: "RussianWordsCoreTests", dependencies: ["RussianWordsCore"], path: "Tests", sources: ["LearningCoreTests.swift", "DictionaryRepositoryTests.swift", "TranslationServiceTests.swift"])
+        .testTarget(name: "RussianWordsCoreTests", dependencies: ["RussianWordsCore"], path: "Tests", sources: ["LearningCoreTests.swift", "DictionaryRepositoryTests.swift", "TranslationServiceTests.swift", "DailyCourseTests.swift", "ExerciseTests.swift"])
     ]
 )

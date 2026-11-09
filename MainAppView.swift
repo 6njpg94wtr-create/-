@@ -12,7 +12,7 @@ struct MainAppView: View {
             ConversationView().tabItem { Label("对话", systemImage: "mic.fill") }
             ProfileView().tabItem { Label("我的", systemImage: "person.fill") }
         }
-        .tint(.indigo)
+        .tint(RWTheme.accent)
         .environmentObject(model)
         .task { model.reload() }
         .alert("暂时无法完成", isPresented: Binding(

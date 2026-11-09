@@ -2,12 +2,25 @@ import AVFoundation
 import Combine
 import Foundation
 import Speech
+import UIKit
 
 @MainActor
 final class SpeechPlayback: ObservableObject {
     static let shared = SpeechPlayback()
     @Published private(set) var errorMessage: String?
     private let synthesizer = AVSpeechSynthesizer()
+    private var lifecycleObserver: AnyCancellable?
+
+    init() {
+        lifecycleObserver = NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)
+            .merge(with: NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification))
+            .sink { [weak self] notification in
+                let isBackground = notification.name == UIApplication.didEnterBackgroundNotification
+                let began = (notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? NSNumber)?.uintValue == AVAudioSession.InterruptionType.began.rawValue
+                guard isBackground || began else { return }
+                Task { @MainActor [weak self] in self?.stop() }
+            }
+    }
 
     func speak(_ text: String, language: String = "ru-RU", rate: Float = 0.4) {
         errorMessage = nil
@@ -44,6 +57,22 @@ final class SpeechRecorder: ObservableObject {
     private var recognitionTask: SFSpeechRecognitionTask?
     private var tapInstalled = false
     private var activeToken: UUID?
+    private var lifecycleObserver: AnyCancellable?
+
+    init() {
+        lifecycleObserver = NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)
+            .merge(with: NotificationCenter.default.publisher(for: UIApplication.didEnterBackgroundNotification))
+            .sink { [weak self] notification in
+                let isBackground = notification.name == UIApplication.didEnterBackgroundNotification
+                let began = (notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? NSNumber)?.uintValue == AVAudioSession.InterruptionType.began.rawValue
+                guard isBackground || began else { return }
+                Task { @MainActor [weak self] in
+                    guard let self = self, self.isRecording || self.isPreparing else { return }
+                    self.errorMessage = isBackground ? "录音已因进入后台停止，可以检查文字后重新录音。" : "录音被系统音频中断，可以检查文字后重新录音。"
+                    self.stop()
+                }
+            }
+    }
 
     func start(language: TranslationLanguage) async {
         guard !Task.isCancelled else { return }

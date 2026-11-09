@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "courses": [{
+    "id": "russianwords.day1.sample",
+    "revision": 1,
+    "dayNumber": 1,
+    "title": "认识俄语字母与问候（示例）",
+    "learningGoal": "了解俄语字母数量，认识重音标记并读出一句非正式问候。",
+    "vocabularyIDs": [],
+    "grammarTopic": "俄语字母与重音入门",
+    "grammarExplanation": "俄语字母表共有 33 个字母。单词中的重读元音通常需要随词记忆；学习材料可用元音上方的重音符号辅助阅读。例如 Приве́т! 的重音在 е 上。这是结构示例内容，尚待完整教学审校。",
+    "exampleSentences": [{"id": "day1.sample.hello", "russian": "Приве́т!", "chinese": "你好！（非正式问候）"}],
+    "reviewIDs": [],
+    "estimatedMinutes": 5,
+    "isSample": true
+  }]
+}

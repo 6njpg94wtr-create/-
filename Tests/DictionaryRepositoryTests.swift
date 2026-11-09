@@ -12,6 +12,38 @@ final class DictionaryRepositoryTests: XCTestCase {
         try DictionaryRepository(url: databaseURL)
     }
 
+    func testFavoritesScopeCannotFallBackToAllEntries() async throws {
+        let database = try repository()
+        for text in ["", "такси"] {
+            do {
+                _ = try await database.search(text, scope: .favorites)
+                XCTFail("Favorites require user IDs and must not return the full dictionary")
+            } catch DictionaryError.favoritesRequireUserState {
+                // The AppModel owns this scope and resolves only saved IDs.
+            }
+        }
+    }
+
+    func testFavoriteIDsResolveOnlySavedEntriesAndRemovalSurvivesRestart() async throws {
+        let database = try repository()
+        let entries = try await database.search("", scope: .all, limit: 2)
+        XCTAssertEqual(entries.count, 2)
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let url = directory.appendingPathComponent("progress.json")
+        let store = try LearningStateRepository(storageURL: url, legacyDefaults: nil)
+        try store.setFavorite(entryID: entries[0].id, isFavorite: true)
+        try store.setFavorite(entryID: entries[0].id, isFavorite: true)
+        let restarted = try LearningStateRepository(storageURL: url, legacyDefaults: nil)
+        let favorites = try await database.entries(ids: restarted.state.favorites.sorted())
+        XCTAssertEqual(favorites.map(\.id), [entries[0].id])
+        XCTAssertFalse(favorites.contains { $0.id == entries[1].id })
+        try restarted.setFavorite(entryID: entries[0].id, isFavorite: false)
+        let reopened = try LearningStateRepository(storageURL: url, legacyDefaults: nil)
+        let removed = try await database.entries(ids: reopened.state.favorites.sorted())
+        XCTAssertTrue(removed.isEmpty)
+    }
+
     func testPinnedRealDictionaryCountAndHonestTeachingCoverage() async throws {
         let database = try repository()
         let stats = try await database.stats()
@@ -52,6 +84,28 @@ final class DictionaryRepositoryTests: XCTestCase {
         XCTAssertTrue(people.contains { $0.russian == "человек" })
         XCTAssertTrue(past.contains { $0.russian == "быть" })
         XCTAssertTrue(school.contains { $0.russian == "школа" })
+        for (form, lemma) in [("книги", "книга"), ("говорю", "говорить"), ("читаешь", "читать")] {
+            let matches = try await database.search(form, scope: .all)
+            XCTAssertTrue(matches.contains { $0.russian == lemma }, "\(form) should resolve to \(lemma)")
+        }
+    }
+
+    func testInflectedSearchNormalizationPreservesStoredSpelling() async throws {
+        let database = try repository()
+        for (plain, normalizedVariant, lemma) in [
+            ("школе", "  ШКО\u{0301}ЛЕ  ", "школа"),
+            ("говорю", "ГОВОРЮ\u{0301}", "говорить"),
+            ("ёлки", "е\u{0308}лки", "ёлка"),
+            ("ёлки", "Е\u{0301}ЛКИ", "ёлка")
+        ] {
+            let baseline = try await database.search(plain, scope: .all)
+            let variant = try await database.search(normalizedVariant, scope: .all)
+            XCTAssertTrue(baseline.contains { $0.russian == lemma })
+            XCTAssertEqual(baseline.map(\.id), variant.map(\.id))
+            XCTAssertEqual(baseline, variant, "Normalization must not change returned Russian spelling or stress")
+            let stored = try await database.entries(ids: baseline.map(\.id))
+            XCTAssertEqual(stored, baseline, "Search results must preserve the stored entries")
+        }
     }
 
     func testTeachingScopesDoNotRelabelReferenceEntries() async throws {
